@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+  --ds-text-accent-purple-bolder: #352c63;
+  --ds-background-accent-magenta-subtle: #e774bb;
+  --dynamic-text-transparent: hsla(0, 0%, 100%, 0.16);
+}
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-size: 13px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+#layoutRoot {
+  background-image: url("https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2133x1600/c0641fb9bc7e3bca921b899890b65474/photo-1704138160435-bc0848d02813.jpg");
+}
+.Close {
+  width: 20px;
+}
+#sidebar {
+  transition: all 100ms;
+}
+
+.inactive {
+  display: none !important;
+}
+.openBtn {
+  position: absolute;
+  background-color: hsla(69, 28.6%, 13.7%, 0.9);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  margin-top: 20px;
+align-items: center;
+  cursor: pointer;
+  display: flex;    
+  border:0.1pt solid #DFE1E6;
+  z-index: 2;
+}
+
+#divider{
+  border-left: 1px solid var(--dynamic-text-transparent);
+    height: 16px;
+    margin: 8px 4px 8px 4px;
+    display: inherit;
+}
