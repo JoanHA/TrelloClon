@@ -4,8 +4,8 @@ import { SlOptions } from "react-icons/sl";
 
 import { IoCloseSharp } from "react-icons/io5";
 import trello from "../assets/trello.svg";
-const AddBtn = () => {
-
+import { useContexto } from "../context/ContextProvider";
+const AddBtn = ({ callback }: { callback: CallableFunction }) => {
   return (
     <>
       <form action="">
@@ -25,7 +25,13 @@ const AddBtn = () => {
           <button className="bg-[#0055CC] hover:bg-[#0C66E4] text-white px-2 py-1 rounded font-bold">
             Añadir tarjeta
           </button>
-          <button type="button" className="hover:bg-neutral-300 p-1 rounded">
+          <button
+            type="button"
+            className="hover:bg-neutral-300 p-1 rounded"
+            onClick={() => {
+              callback(false);
+            }}
+          >
             <IoCloseSharp size={20} />
           </button>
         </div>
@@ -35,32 +41,56 @@ const AddBtn = () => {
 };
 const cols = 30;
 const Cards = () => {
-    const [adding, setAdding] = useState(false);  
+  const [addingTask, setAddingTask] = useState(false);
+  const [addingProcess, setAddingProcess] = useState(false);
+  const [addingDone, setAddingDone] = useState(false);
+  const { tasks } = useContexto();
+  const ondrag = (e:any)=>{
+    console.log(e)
+
+  }
   return (
     <div className="flex gap-3">
       {/* tareas */}
       <div>
-        <div className="bg-[#f1f2f4] rounded-2xl w-[280px] p-4 text-[#2d3440] shadow">
+        <div className="bg-[#f1f2f4] rounded-2xl w-[280px]  p-2 text-[#2d3440] shadow">
           <div className="card-header py-1">
             <div className="flex justify-between items-center">
               <h2 className="font-bold">Tareas</h2>
-              <span className="hover:bg-neutral-300 w-[30px] rounded flex items-center justify-center h-[30px]">
+              <span className="hover:bg-neutral-300 w-[30px]  rounded-xl flex items-center justify-center h-[30px]">
                 <SlOptions />
               </span>
             </div>
           </div>
-          <div className="card-body"></div>
-          {adding ? (
+          <div className="card-body">
+            <div>
+              {tasks?.map((task) => (
+                <div
+                  className="bg-[#ffff] rounded-xl shadow-md p-2"
+                  draggable
+                  style={{ cursor: "pointer" }}
+                >
+                  <div>{task}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          {addingTask ? (
             <>
               <div className="card-footer flex justify-between">
-                <AddBtn></AddBtn>
+                <AddBtn callback={setAddingTask}></AddBtn>
               </div>
             </>
           ) : (
             <>
               <div className="card-footer flex justify-between ">
                 <div className="hover:bg-neutral-300 flex-1 rounded p-2">
-                  <button className="flex items-center gap-2">
+                  <button
+                    className="flex items-center gap-2"
+                    onClick={() => {
+                      setAddingTask(true);
+                    }}
+                  >
                     <GoPlus size={20} /> Añada una tarjeta
                   </button>
                 </div>
@@ -74,7 +104,7 @@ const Cards = () => {
       </div>
       {/*  Proceso*/}
       <div>
-        <div className="bg-[#f1f2f4] rounded-2xl  w-[280px] p-4 text-[#2d3440] shadow">
+        <div className="bg-[#f1f2f4] rounded-2xl  w-[280px] p-2 text-[#2d3440] shadow">
           <div className="card-header py-1">
             <div className="flex justify-between items-center">
               <h2 className="font-bold">En proceso</h2>
@@ -84,17 +114,22 @@ const Cards = () => {
             </div>
           </div>
           <div className="card-body"></div>
-          {adding ? (
+          {addingProcess ? (
             <>
               <div className="card-footer flex justify-between">
-                <AddBtn></AddBtn>
+                <AddBtn callback={setAddingProcess}></AddBtn>
               </div>
             </>
           ) : (
             <>
               <div className="card-footer flex justify-between ">
-                <div className="hover:bg-neutral-300 flex-1 rounded p-2">
-                  <button className="flex items-center gap-2">
+                <div className="hover:bg-neutral-300 flex-1  rounded-xl p-2">
+                  <button
+                    className="flex items-center gap-2"
+                    onClick={() => {
+                      setAddingProcess(true);
+                    }}
+                  >
                     <GoPlus size={20} /> Añada una tarjeta
                   </button>
                 </div>
@@ -108,7 +143,7 @@ const Cards = () => {
       </div>
       {/* Hecho */}
       <div>
-        <div className="bg-[#f1f2f4] rounded-2xl  w-[280px] p-4 text-[#2d3440] shadow">
+        <div className="bg-[#f1f2f4] rounded-2xl  w-[280px] p-2 text-[#2d3440] shadow">
           <div className="card-header py-1">
             <div className="flex justify-between items-center">
               <h2 className="font-bold">Hechas</h2>
@@ -118,17 +153,22 @@ const Cards = () => {
             </div>
           </div>
           <div className="card-body"></div>
-          {adding ? (
+          {addingDone ? (
             <>
               <div className="card-footer flex justify-between">
-                <AddBtn></AddBtn>
+                <AddBtn callback={setAddingDone}></AddBtn>
               </div>
             </>
           ) : (
             <>
               <div className="card-footer flex justify-between ">
-                <div className="hover:bg-neutral-300 flex-1 rounded p-2">
-                  <button className="flex items-center gap-2">
+                <div className="hover:bg-neutral-300  flex-1 rounded-xl p-2">
+                  <button
+                    className="flex items-center gap-2"
+                    onClick={() => {
+                      setAddingDone(true);
+                    }}
+                  >
                     <GoPlus size={20} /> Añada una tarjeta
                   </button>
                 </div>
